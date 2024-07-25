@@ -1,15 +1,20 @@
 const express = require("express");
 const cors = require('cors');
+const morgan = require('morgan')
+
 const { scrapeFlipkart } = require("./Controllers/scrapeFlipkart");
 const { scrapeAmazon } = require("./Controllers/scrapeAmazon");
+
 
 const app = express();
 const port = 4000;
 
 // Middleware to parse JSON bodies
 app.use(express.json());
-app.use(cors());
-
+app.use(cors({
+    origin: 'http://localhost:5173'
+}));
+app.use(morgan('dev'));
 
 app.get("/", (req,res)=>{
     res.send("Server running")
@@ -37,6 +42,7 @@ app.post('/scrape', async (req, res) => {
 
         
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: error.message });
     }
 });
