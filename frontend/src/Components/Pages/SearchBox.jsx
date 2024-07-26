@@ -2,15 +2,22 @@ import React, { useState } from 'react'
 import "../../App.css"
 import HeroSection from '../Common/HeroSection'
 import { ScrapedData } from '../../Services/serviceHandler';
+import CardRenderer from './CardRenderer';
 
 const SearchBox = () => {
 
-    const [product, setProduct ] = useState();
+    const [product, setProduct ] = useState("");
+    const [loading, setLoading ] = useState(false);
+    const [amazon, setAmazon] = useState();
+    const [flipkart, setFlipkart] = useState();
     
     const submitHandler = async(e) => {
         e.preventDefault()
-        console.log(product)
+        // console.log(product)
         const res = await ScrapedData(product);
+        setAmazon(res.amazon);
+        setFlipkart(res.flipkart);
+        // console.log(res)
     } 
 
     return (
@@ -57,7 +64,19 @@ const SearchBox = () => {
                     </button>
 
                 </form>
-                <span className=' pl-5 text-sm text-gray-400'> 🔊Enter Product which you want to compare for exact comparison</span>
+
+                <div className='text-gray-400 text-sm flex flex-col justify-center items-start p-3'>
+                <span className=''> ⌛It may take 5 to 10 seconds to fetch data from different sites</span>
+                <span className=' '> 🔊Enter Product which you want to compare for exact comparison</span>
+                </div>
+
+
+               { product &&  (<div className=' text-black flex flex-col justify-center items-center mt-10'>
+                <h1 className='text-2xl w-full bg-gray-700 p-2 rounded-xl text-white font-bold font-sans'>Search Results will Shown below </h1>
+                <div className='w-full'>
+                    <CardRenderer amazon={amazon} flipkart={flipkart} />
+                </div>
+                </div>)}
             </div>
         </div>
     )

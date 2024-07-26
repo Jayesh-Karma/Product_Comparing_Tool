@@ -7,7 +7,7 @@ exports.scrapeFlipkart = async(product) =>{
         const browser = await puppeteer.launch({headless:true});
         const page = await browser.newPage();
         const query = product.split(' ').join('+');
-        console.log(query);
+        // console.log(query);
 
         await page.goto(`https://www.flipkart.com/search?q=${query}`, { waitUntil:'networkidle2'})
 

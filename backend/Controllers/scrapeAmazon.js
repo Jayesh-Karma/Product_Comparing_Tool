@@ -7,7 +7,7 @@ exports.scrapeAmazon = async(product) =>{
         const browser = await puppeteer.launch({headless:true});
         const page = await browser.newPage();
         const query = product.split(' ').join('+');
-        console.log(query);
+        // console.log(query);
 
         await page.goto(`https://www.amazon.in/s?k=${query}`, { waitUntil:'networkidle2'})
 
